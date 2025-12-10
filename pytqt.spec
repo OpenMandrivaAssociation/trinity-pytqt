@@ -1,6 +1,4 @@
-#
-# Please submit bugfixes or comments via http://www.trinitydesktop.org/
-#
+%bcond clang 1
 
 # BUILD WARNING:
 #  Remove qt-devel and qt3-devel and any kde*-devel on your system !
@@ -11,6 +9,8 @@
 %if "%{?tde_version}" == ""
 %define tde_version 14.1.5
 %endif
+%define pkg_rel 2
+
 %define tde_pkg pytqt
 %define tde_prefix /opt/trinity
 %define tde_bindir %{tde_prefix}/bin
@@ -23,29 +23,22 @@
 %define tde_tdeincludedir %{tde_includedir}/tde
 %define tde_tdelibdir %{tde_libdir}/trinity
 
-%if 0%{?mdkversion}
 %undefine __brp_remove_la_files
 %define dont_remove_libtool_files 1
 %define _disable_rebuild_configure 1
-%endif
 
 %define tarball_name %{tde_pkg}-trinity
-%global toolchain %(readlink /usr/bin/cc)
 
 
 Name:		trinity-%{tde_pkg}
 Epoch:		%{tde_epoch}
 Version:	3.18.1
-Release:	%{?tde_version}_%{?!preversion:1}%{?preversion:0_%{preversion}}%{?dist}
+Release:	%{?tde_version}_%{?!preversion:%{pkg_rel}}%{?preversion:0_%{preversion}}%{?dist}
 Summary:	TQt bindings for Python
 Group:		Development/Libraries/Python
 URL:		http://www.trinitydesktop.org/
 
-%if 0%{?suse_version}
-License:	GPL-2.0+
-%else
 License:	GPLv2+
-%endif
 
 #Vendor:		Trinity Project
 #Packager:	Francois Andriot <francois.andriot@free.fr>
@@ -65,9 +58,7 @@ BuildRequires:	trinity-filesystem >= %{tde_version}
 BuildRequires:	sip4-tqt-devel >= %{?epoch:%{epoch}:}4.10.5
 BuildRequires:	libtqscintilla-devel >= %{?epoch:%{epoch}:}1.7.1
 
-%if "%{?toolchain}" != "clang"
-BuildRequires:	gcc-c++
-%endif
+%{!?with_clang:BuildRequires:	gcc-c++}
 
 # PYTHON support
 %if "%{python}" == ""
@@ -118,14 +109,7 @@ same way in both languages (with syntax differences, of course)
 %defattr(-,root,root,-)
 %doc NEWS README
 %dir %{python_sitearch}/PyTQt
-%if 0%{?mdkversion} || 0%{?pclinuxos} || 0%{?rhel} == 7 || 0%{?suse_version}
 %{python_sitearch}/PyTQt/__init__.py*
-%if 0%{?rhel} == 7
-%{python_sitearch}/PyTQt/__pycache__/__init__.*.pyc
-%endif
-%else
-%pycached %{python_sitearch}/PyTQt/__init__.py
-%endif
 %{python_sitearch}/PyTQt/tqt.so
 %{python_sitearch}/PyTQt/tqtcanvas.so
 %{python_sitearch}/PyTQt/tqtnetwork.so
@@ -208,24 +192,9 @@ packages based on them, like PyTDE.
 
 %files -n pytqt-devel
 %defattr(-,root,root,-)
-%if 0%{?mdkversion} || 0%{?pclinuxos} || 0%{?rhel} == 7 || 0%{?suse_version}
 %{python_sitearch}/PyTQt/pytqtconfig.py*
-%if 0%{?rhel} == 7
-%{python_sitearch}/PyTQt/__pycache__/pytqtconfig.*.pyc
-%endif
-%else
-%pycached %{python_sitearch}/PyTQt/pytqtconfig.py
-%endif
 %dir %{_datadir}/sip
 %{_datadir}/sip/tqt/
-
-##########
-
-%if 0%{?suse_version} && 0%{?opensuse_bs} == 0
-%debug_package
-%endif
-
-##########
 
 %prep
 %autosetup -p1 -n %{tarball_name}-%{tde_version}%{?preversion:~%{preversion}}
@@ -259,8 +228,3 @@ echo yes | %__python ../configure.py \
 %__install -d %{?buildroot}%{_datadir}/sip/
 %__cp -rf sip/* %{?buildroot}%{_datadir}/sip/tqt/
 
-
-%clean
-
-
-%changelog
