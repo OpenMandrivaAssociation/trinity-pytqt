@@ -9,19 +9,11 @@
 %if "%{?tde_version}" == ""
 %define tde_version 14.1.5
 %endif
-%define pkg_rel 3
+%define pkg_rel 4
 
 %define tde_pkg pytqt
 %define tde_prefix /opt/trinity
-%define tde_bindir %{tde_prefix}/bin
-%define tde_datadir %{tde_prefix}/share
-%define tde_docdir %{tde_datadir}/doc
-%define tde_includedir %{tde_prefix}/include
-%define tde_libdir %{tde_prefix}/%{_lib}
-%define tde_tdeappdir %{tde_datadir}/applications/tde
-%define tde_tdedocdir %{tde_docdir}/tde
-%define tde_tdeincludedir %{tde_includedir}/tde
-%define tde_tdelibdir %{tde_libdir}/trinity
+
 
 %undefine __brp_remove_la_files
 %define dont_remove_libtool_files 1
@@ -40,10 +32,6 @@ URL:		http://www.trinitydesktop.org/
 
 License:	GPLv2+
 
-#Vendor:		Trinity Project
-#Packager:	Francois Andriot <francois.andriot@free.fr>
-
-Prefix:		%{tde_prefix}
 
 Source0:	https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{tde_version}/main/dependencies/%{tarball_name}-%{tde_version}%{?preversion:~%{preversion}}.tar.xz
 
@@ -171,8 +159,8 @@ Linguist translation files from Python code.
 
 %files -n trinity-pytqt-tools
 %defattr(-,root,root,-)
-%{tde_bindir}/pytqlupdate
-%{tde_bindir}/pytquic
+%{tde_prefix}/bin/pytqlupdate
+%{tde_prefix}/bin/pytquic
 
 ##########
 
@@ -202,7 +190,7 @@ packages based on them, like PyTDE.
 
 %build
 unset QTDIR QTINC QTLIB
-export PATH="%{tde_bindir}:${PATH}"
+export PATH="%{tde_prefix}/bin:${PATH}"
 
 mkdir build
 cd build
@@ -215,7 +203,7 @@ echo yes | %__python ../configure.py \
 	-o %{_libdir} -u -j 10 \
 	-d %{python_sitearch}/PyTQt \
 	-v %{_datadir}/sip/tqt \
-	-b %{tde_bindir} \
+	-b %{tde_prefix}/bin \
 	-w \
 	CXXFLAGS_RELEASE="" CXXFLAGS="${RPM_OPT_FLAGS} -I%{_includedir}/tqt" STRIP=""
 
