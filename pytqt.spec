@@ -48,14 +48,15 @@ BuildRequires:	libtqscintilla-devel >= %{?epoch:%{epoch}:}1.7.1
 
 %{!?with_clang:BuildRequires:	gcc-c++}
 
+BuildRequires:  make
+
 # PYTHON support
 %if "%{python}" == ""
 %global python python3
 %global __python %__python3
 %global python_sitearch %{python3_sitearch}
 %{!?python_sitearch:%global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
-BuildRequires:	%{python}
-BuildRequires:	%{python}-devel
+BuildRequires:	pkgconfig(python)
 %endif
 
 # MESA support
