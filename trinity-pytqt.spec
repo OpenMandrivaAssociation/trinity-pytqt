@@ -1,19 +1,13 @@
 %bcond clang 1
 
-# BUILD WARNING:
-#  Remove qt-devel and qt3-devel and any kde*-devel on your system !
-#  Having KDE libraries may cause FTBFS here !
-
 # TDE variables
 %define tde_epoch 2
 %if "%{?tde_version}" == ""
 %define tde_version 14.1.5
 %endif
-%define pkg_rel 4
 
 %define tde_pkg pytqt
 %define tde_prefix /opt/trinity
-
 
 %undefine __brp_remove_la_files
 %define dont_remove_libtool_files 1
@@ -25,7 +19,7 @@
 Name:		trinity-%{tde_pkg}
 Epoch:		%{tde_epoch}
 Version:	3.18.1
-Release:	%{?tde_version}_%{?!preversion:%{pkg_rel}}%{?preversion:0_%{preversion}}%{?dist}
+Release:	%{?tde_version:%{tde_version}_}5
 Summary:	TQt bindings for Python
 Group:		Development/Libraries/Python
 URL:		http://www.trinitydesktop.org/
@@ -33,18 +27,16 @@ URL:		http://www.trinitydesktop.org/
 License:	GPLv2+
 
 
-Source0:	https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{tde_version}/main/dependencies/%{tarball_name}-%{tde_version}%{?preversion:~%{preversion}}.tar.xz
+Source0:	https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{tde_version}/main/dependencies/%{tarball_name}-%{tde_version}.tar.xz
 
 Obsoletes:		trinity-PyQt < %{?epoch:%{epoch}:}%{version}-%{release}
 Obsoletes:		trinity-python-qt3 < %{?epoch:%{epoch}:}%{version}-%{release}
-Obsoletes:		trinity-python-tqt < %{?epoch:%{epoch}:}%{version}-%{release}
-Provides:		trinity-python-tqt = %{?epoch:%{epoch}:}%{version}-%{release}
 
 BuildRequires:	tqt3-apps-devel >= 3.5.0
-BuildRequires:	libtqt4-devel >= %{?epoch:%{epoch}:}4.2.0
+BuildRequires:	pkgconfig(tqt)
 BuildRequires:	trinity-filesystem >= %{tde_version}
 BuildRequires:	sip4-tqt-devel >= %{?epoch:%{epoch}:}4.10.5
-BuildRequires:	libtqscintilla-devel >= %{?epoch:%{epoch}:}1.7.1
+BuildRequires:	pkgconfig(tqscintilla)
 
 %{!?with_clang:BuildRequires:	gcc-c++}
 
@@ -79,11 +71,6 @@ same way in both languages (with syntax differences, of course)
 %package -n pytqt
 Summary:	TQt bindings for Python
 Group:		Development/Libraries/Python
-Requires:	trinity-filesystem >= %{tde_version}
-Requires:	sip4-tqt >= %{?epoch:%{epoch}:}4.10.5
-Requires:	libtqt4 >= %{?epoch:%{epoch}:}4.2.0
-Obsoletes:	python-tqt < %{?epoch:%{epoch}:}%{version}-%{release}
-Provides:	python-tqt = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description -n pytqt
 Python binding module that allows use of TQt X Window toolkit v3.
@@ -113,8 +100,6 @@ same way in both languages (with syntax differences, of course)
 Summary:	TQt OpenGL bindings for Python
 Group:		Development/Libraries/Python
 Requires:	pytqt = %{?epoch:%{epoch}:}%{version}-%{release}
-Obsoletes:	python-tqt-gl < %{?epoch:%{epoch}:}%{version}-%{release}
-Provides:	python-tqt-gl = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description -n pytqt-gl
 Python binding module that allows use of the OpenGL facilities
@@ -131,8 +116,6 @@ portable graphics-capable scripts.
 Summary:	TQtext extensions for pytqt
 Group:		Development/Libraries/Python
 Requires:	pytqt = %{?epoch:%{epoch}:}%{version}-%{release}
-Obsoletes:	python-tqt-tqtext < %{?epoch:%{epoch}:}%{version}-%{release}
-Provides:	python-tqt-tqtext = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description -n pytqt-tqtext
 pytqt Extensions. Contains:
@@ -170,9 +153,6 @@ Summary:	TQt bindings for Python - Development files
 Group:		Development/Libraries/Python
 Requires:	pytqt = %{?epoch:%{epoch}:}%{version}-%{release}
 Requires:	trinity-pytqt-tools = %{?epoch:%{epoch}:}%{version}-%{release}
-Requires:	libtqt4-devel >= %{?epoch:%{epoch}:}4.2.0
-Obsoletes:	python-tqt-devel < %{?epoch:%{epoch}:}%{version}-%{release}
-Provides:	python-tqt-devel = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description -n pytqt-devel
 Development .sip files with definitions of PyQt classes. They
