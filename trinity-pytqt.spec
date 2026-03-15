@@ -26,11 +26,7 @@ URL:		http://www.trinitydesktop.org/
 
 License:	GPLv2+
 
-
 Source0:	https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{tde_version}/main/dependencies/%{tarball_name}-%{tde_version}.tar.xz
-
-Obsoletes:		trinity-PyQt < %{?epoch:%{epoch}:}%{version}-%{release}
-Obsoletes:		trinity-python-qt3 < %{?epoch:%{epoch}:}%{version}-%{release}
 
 BuildRequires:	tqt3-apps-devel >= 3.5.0
 BuildRequires:	pkgconfig(tqt)
@@ -99,7 +95,7 @@ same way in both languages (with syntax differences, of course)
 %package -n pytqt-gl
 Summary:	TQt OpenGL bindings for Python
 Group:		Development/Libraries/Python
-Requires:	pytqt = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:	pytqt = %{EVRD}
 
 %description -n pytqt-gl
 Python binding module that allows use of the OpenGL facilities
@@ -115,7 +111,7 @@ portable graphics-capable scripts.
 %package -n pytqt-tqtext
 Summary:	TQtext extensions for pytqt
 Group:		Development/Libraries/Python
-Requires:	pytqt = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:	pytqt = %{EVRD}
 
 %description -n pytqt-tqtext
 pytqt Extensions. Contains:
@@ -132,7 +128,7 @@ pytqt Extensions. Contains:
 %package -n trinity-pytqt-tools
 Summary:	Pyuic and pylupdate for TQt
 Group:		Development/Libraries/Python
-Requires:	pytqt = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:	pytqt = %{EVRD}
 
 %description -n trinity-pytqt-tools
 pyuic is the PyQt counterpart for TQt's uic. It takes an XML
@@ -151,8 +147,8 @@ Linguist translation files from Python code.
 %package -n pytqt-devel
 Summary:	TQt bindings for Python - Development files
 Group:		Development/Libraries/Python
-Requires:	pytqt = %{?epoch:%{epoch}:}%{version}-%{release}
-Requires:	trinity-pytqt-tools = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:	pytqt = %{EVRD}
+Requires:	trinity-pytqt-tools = %{EVRD}
 
 %description -n pytqt-devel
 Development .sip files with definitions of PyQt classes. They
@@ -166,7 +162,7 @@ packages based on them, like PyTDE.
 %{_datadir}/sip/tqt/
 
 %prep
-%autosetup -p1 -n %{tarball_name}-%{tde_version}%{?preversion:~%{preversion}}
+%autosetup -p1 -n %{tarball_name}-%{tde_version}
 
 
 %build
