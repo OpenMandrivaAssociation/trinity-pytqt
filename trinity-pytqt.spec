@@ -1,7 +1,6 @@
 %bcond clang 1
 
 # TDE variables
-%define tde_epoch 2
 %if "%{?tde_version}" == ""
 %define tde_version 14.1.5
 %endif
@@ -17,7 +16,6 @@
 
 
 Name:		trinity-%{tde_pkg}
-Epoch:		%{tde_epoch}
 Version:	3.18.1
 Release:	%{?tde_version:%{tde_version}_}5
 Summary:	TQt bindings for Python
