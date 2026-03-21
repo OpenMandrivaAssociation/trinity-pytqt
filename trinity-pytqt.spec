@@ -27,6 +27,7 @@ License:	GPLv2+
 Source0:	https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{tde_version}/main/dependencies/%{tarball_name}-%{tde_version}.tar.xz
 
 BuildRequires:	tqt3-apps-devel >= 3.5.0
+BuildRequires:  tqt3-dev-tools
 BuildRequires:	pkgconfig(tqt)
 BuildRequires:	trinity-filesystem >= %{tde_version}
 BuildRequires:	sip4-tqt-devel >= %{?epoch:%{epoch}:}4.10.5
