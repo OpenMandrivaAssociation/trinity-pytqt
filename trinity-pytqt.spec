@@ -1,10 +1,6 @@
 %bcond clang 1
 
 # TDE variables
-%if "%{?tde_version}" == ""
-%define tde_version 14.1.5
-%endif
-
 %define tde_pkg pytqt
 %define tde_prefix /opt/trinity
 
@@ -16,21 +12,21 @@
 
 
 Name:		trinity-%{tde_pkg}
-Version:	3.18.1
-Release:	%{?tde_version:%{tde_version}_}5
+Version:	14.1.6
+Release:	1
 Summary:	TQt bindings for Python
 Group:		Development/Libraries/Python
 URL:		http://www.trinitydesktop.org/
 
 License:	GPLv2+
 
-Source0:	https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{tde_version}/main/dependencies/%{tarball_name}-%{tde_version}.tar.xz
+Source0:	https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{version}/main/dependencies/%{tarball_name}-%{version}.tar.xz
 
-BuildRequires:	tqt3-apps-devel >= 3.5.0
+BuildRequires:	tqt3-apps-devel
 BuildRequires:  tqt3-dev-tools
 BuildRequires:	pkgconfig(tqt)
-BuildRequires:	trinity-filesystem >= %{tde_version}
-BuildRequires:	sip4-tqt-devel >= %{?epoch:%{epoch}:}4.10.5
+BuildRequires:	trinity-filesystem >= %{version}
+BuildRequires:	sip4-tqt-devel >= %{version}
 BuildRequires:	pkgconfig(tqscintilla)
 
 %{!?with_clang:BuildRequires:	gcc-c++}
@@ -161,7 +157,7 @@ packages based on them, like PyTDE.
 %{_datadir}/sip/tqt/
 
 %prep
-%autosetup -p1 -n %{tarball_name}-%{tde_version}
+%autosetup -p1 -n %{tarball_name}-%{version}
 
 
 %build
