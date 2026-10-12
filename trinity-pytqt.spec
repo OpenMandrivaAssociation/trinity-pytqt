@@ -13,7 +13,7 @@
 
 Name:		trinity-%{tde_pkg}
 Version:	14.1.6
-Release:	1
+Release:	2
 Summary:	TQt bindings for Python
 Group:		Development/Libraries/Python
 URL:		http://www.trinitydesktop.org/
