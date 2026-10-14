@@ -26,7 +26,8 @@ BuildRequires:	tqt3-apps-devel
 BuildRequires:  tqt3-dev-tools
 BuildRequires:	pkgconfig(tqt)
 BuildRequires:	trinity-filesystem >= %{version}
-BuildRequires:	sip4-tqt-devel >= %{version}
+# 14.1.6-1 is the Python 3.14 module.
+BuildRequires:	sip4-tqt-devel >= %{version}-2
 BuildRequires:	pkgconfig(tqscintilla)
 
 %{!?with_clang:BuildRequires:	gcc-c++}
